@@ -1,0 +1,17 @@
+2e91aa4b6381a6cadbb8ed2d0f306cc9 *DESCRIPTION
+f6150544abc03b4f580039aa6a3d94ac *NAMESPACE
+88108482f6367391f0761119b27edc1d *R/Functions.R
+64e8efcf4f0cf485954017b6a24a7422 *R/RcppExports.R
+9f73fc10ffd723d3f5a2ade161c21995 *README.md
+65ed3b4daa6dc26a9fb8dedc0064393c *man/TauStar-package.Rd
+44d7b34c559b197758cd3c41acd82576 *man/tStar.Rd
+9bc5aa7d4334d43640f515c9a1fd70bd *src/Makevars
+8d46d69896a1f1d31ed76035a0e49d67 *src/Makevars.win
+2ab103c96b0f57711e7b37c2a2b97c59 *src/RcppExports.cpp
+fb1bc30d30f7b110a4fb64f96088db5b *src/misc.cpp
+4f1364f56f90982de3562a87feececa3 *src/misc.h
+de412d662f4c8948060780e1f102d37d *src/rcpp_t_star.cpp
+047c5ddbfe60ff12d08bcb9ee6b17fd4 *src/red_black_tree.cpp
+be2d17082aae25c71fed444961f160f6 *src/red_black_tree.h
+0eb39da089bc6d1f87ec4a2bc58b5b51 *tests/testthat.R
+e2d1ce3cab0a885027613058d8ea6ecf *tests/testthat/test_tStar.R
