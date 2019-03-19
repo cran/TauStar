@@ -1,12 +1,12 @@
-7e0764d3c024c317a6943ca851c36757 *DESCRIPTION
+e8b0e38a4326296ad521e36cf4a54736 *DESCRIPTION
 bf53f7850e04ca1ab229e9813fc8e931 *NAMESPACE
-90b898e7b45e3e0f8f7105d4429ac6a7 *NEWS.md
+1752524541fb4a7cfa3b4ac97aea9d99 *NEWS.md
 bb802457602233a86d40522bb87e81b4 *R/Functions.R
-b655fea5248fe20d9917972c6b6893ab *R/RcppExports.R
+c7e46a613c47a574f29396a1ab60eae7 *R/RcppExports.R
 207759e43fdb34fa2f5862ce89e71f60 *R/TauStar.R
 61e28811ed4e21a709a9b531730cd747 *README.md
 7376779a70d0a3da8bb5f09115bbe546 *inst/include/TauStar.h
-cec90eb96732e3caa127177de2db191f *inst/include/TauStar_RcppExports.h
+07cc8aa634250130df9fa9e71f1d8d12 *inst/include/TauStar_RcppExports.h
 308c62ef9a69481ec7a0071714aa4e6a *man/TauStar-package.Rd
 de855fa4fb1efa5031da9dcc60528d09 *man/binaryQuantileSearch.Rd
 90cb52152f2684ddeebccb026fd4de12 *man/eigenForDiscreteProbs.Rd
@@ -18,7 +18,7 @@ bac8cbd743a1d8f84b676fa4f48a9587 *man/isDiscrete.Rd
 d3165bf11a612a083a223db232ef302b *man/pHoeffInd.Rd
 296ab09155524f0d9aa0dd81009c7c19 *man/pMixHoeffInd.Rd
 65ac40667ed220a34f02434d7ff5434a *man/print.tstest.Rd
-c96121d92b176a62a86536cf0ed5e423 *man/tStar.Rd
+5e26720d45f316377c5b5b33d1cc1693 *man/tStar.Rd
 1e7d5dcff34b14ea930a34eebabeb778 *man/tauStarTest.Rd
 44eb64cb48792102b1b91bd924f5410d *src/AsymCdfIntegrandEvaluator.cpp
 73c5259615093f60eb5cb3c1e0fd73ca *src/AsymCdfIntegrandEvaluator.h
@@ -35,8 +35,7 @@ fbad8837226f92d8e663c36f35a2cd16 *src/AsymPdfIntegrandEvaluator.h
 a181bf7dcfdf4b757b92ea5e7600f39d *src/IntegrandEvaluator.h
 9bc5aa7d4334d43640f515c9a1fd70bd *src/Makevars
 8d46d69896a1f1d31ed76035a0e49d67 *src/Makevars.win
-a59ff432bbdb90575e63be81f9b36804 *src/RcppExports.cpp
-6d356a9c43764b0fbf23e894b3b0ef69 *src/init.c
+0cfe3a5086a9158c5d8afe7e23346021 *src/RcppExports.cpp
 de78206cc3aaef4675b252ef6c162509 *src/misc.cpp
 18016559426b893e763a2e120e2d9b28 *src/misc.h
 cc25949aa7fe238ee9511b448c34be05 *src/rcpp_numerical_cdf.cpp
@@ -50,7 +49,7 @@ c05a041f3c03cdda17d698979fd6ed6a *tests/testthat/disDensityData.csv
 dacea853593d12d4962166e2bfca42df *tests/testthat/disLowerTailProbs.csv
 5e7c9f084e68ee419d799d504042e973 *tests/testthat/mixDensityData.csv
 fbdc63fa3db0c5e893bdc62915fbcb6b *tests/testthat/mixLowerTailProbs.csv
-f4fe6937f9ef1a5514a6ba62c45568e9 *tests/testthat/test_CdfsPdfs.R
+d8ebe07c41acc53be4d2fa27546805d8 *tests/testthat/test_CdfsPdfs.R
 01af8b4ac1b7e4f2c8217f76c1cee883 *tests/testthat/test_quantileFunctions.R
 f4080923fc917e3f99ca5763c3cc68f7 *tests/testthat/test_tStar.R
-2b5ba69bab67433656b9e1720e4b7f3b *tests/testthat/test_tauStarTest.R
+bd16479246a4e8ac10fef634ca11d0f1 *tests/testthat/test_tauStarTest.R
