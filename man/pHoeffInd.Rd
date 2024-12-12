@@ -7,7 +7,7 @@
 \alias{qHoeffInd}
 \title{Null asymptotic distribution of t* in the continuous case}
 \usage{
-pHoeffInd(x, lower.tail = T, error = 10^-5)
+pHoeffInd(x, lower.tail = TRUE, error = 10^-5)
 
 rHoeffInd(n)
 

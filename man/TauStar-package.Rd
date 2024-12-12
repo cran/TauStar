@@ -17,14 +17,13 @@ interested in performing tests of independence then see the function
 tauStarTest.
 }
 \examples{
-\dontrun{
 library(TauStar)
 
 # Compute t* for a concordant quadruple
-tStar(c(1,2,3,4), c(1,2,3,4)) # == 2/3
+tStar(c(1, 2, 3, 4), c(1, 2, 3, 4)) # == 2/3
 
 # Compute t* for a discordant quadruple
-tStar(c(1,2,3,4), c(1,-1,1,-1)) # == -1/3
+tStar(c(1, 2, 3, 4), c(1, -1, 1, -1)) # == -1/3
 
 # Compute t* on random normal iid normal data
 set.seed(23421)
@@ -32,25 +31,25 @@ tStar(rnorm(4000), rnorm(4000)) # near 0
 
 # Compute t* as a v-statistic
 set.seed(923)
-tStar(rnorm(100), rnorm(100), vStatistic=TRUE)
+tStar(rnorm(100), rnorm(100), vStatistic = TRUE)
 
 # Compute an approximation of tau* via resampling
 set.seed(9492)
 tStar(rnorm(10000), rnorm(10000),
-      resample=TRUE, sampleSize=30, numResamples=5000)
+    resample = TRUE, sampleSize = 30, numResamples = 5000
+)
 
 # Perform a test of independence using continuous data
 set.seed(123)
-x = rnorm(100)
-y = rnorm(100)
-testResults = tauStarTest(x,y)
+x <- rnorm(100)
+y <- rnorm(100)
+testResults <- tauStarTest(x, y)
 print(testResults$pVal) # big p-value
 
 # Now make x and y correlated so we expect a small p-value
-y = y + x
-testResults = tauStarTest(x,y)
+y <- y + x
+testResults <- tauStarTest(x, y)
 print(testResults$pVal) # small p-value
-}
 
 }
 \references{
@@ -66,7 +65,12 @@ Preetam Nandy, Luca Weihs, and Mathias Drton. Large-Sample Theory for the
 Bergsma-Dassios Sign Covariance. arXiv preprint arXiv:1602.04387. 2016.
 }
 \author{
-\strong{Maintainer}: Luca Weihs \email{lucaw@uw.edu}
+\strong{Maintainer}: Julian D. Karch \email{j.d.karch@fsw.leidenuniv.nl} (\href{https://orcid.org/0000-0002-1625-2822}{ORCID})
+
+Authors:
+\itemize{
+  \item Luca Weihs \email{lucaw@uw.edu}
+}
 
 Other contributors:
 \itemize{

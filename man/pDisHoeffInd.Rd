@@ -7,7 +7,7 @@
 \alias{qDisHoeffInd}
 \title{Null asymptotic distribution of t* in the discrete case}
 \usage{
-pDisHoeffInd(x, probs1, probs2, lower.tail = T, error = 10^-5)
+pDisHoeffInd(x, probs1, probs2, lower.tail = TRUE, error = 10^-5)
 
 dDisHoeffInd(x, probs1, probs2, error = 10^-3)
 
@@ -21,7 +21,7 @@ qDisHoeffInd(p, probs1, probs2, error = 10^-4)
 \item{probs1}{a vector of probabilities corresponding to the (ordered)
 support of X. That is if your first random variable has support
 \eqn{u_1,...,u_n} then the ith entry of probs should be
-eqn{P(X = u_i)}.}
+\eqn{P(X = u_i)}.}
 
 \item{probs2}{just as probs1 but for the second random variable Y.}
 

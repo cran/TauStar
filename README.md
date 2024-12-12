@@ -1,5 +1,9 @@
 # TauStar Package
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/karchjd/TauStar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/karchjd/TauStar/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 ## Purpose
 
 This package allows you to efficiently compute, and perform tests of

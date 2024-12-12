@@ -7,7 +7,7 @@
 \alias{qMixHoeffInd}
 \title{Null asymptotic distribution of t* in the mixed case}
 \usage{
-pMixHoeffInd(x, probs, lower.tail = T, error = 10^-6)
+pMixHoeffInd(x, probs, lower.tail = TRUE, error = 10^-6)
 
 dMixHoeffInd(x, probs, error = 10^-3)
 

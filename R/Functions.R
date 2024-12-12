@@ -64,14 +64,13 @@
 #' Bergsma-Dassios Sign Covariance." arXiv preprint arXiv:1504.00964 (2015).
 #'
 #' @examples
-#' \dontrun{
 #' library(TauStar)
 #'
 #' # Compute t* for a concordant quadruple
-#' tStar(c(1,2,3,4), c(1,2,3,4)) # == 2/3
+#' tStar(c(1, 2, 3, 4), c(1, 2, 3, 4)) # == 2/3
 #'
 #' # Compute t* for a discordant quadruple
-#' tStar(c(1,2,3,4), c(1,-1,1,-1)) # == -1/3
+#' tStar(c(1, 2, 3, 4), c(1, -1, 1, -1)) # == -1/3
 #'
 #' # Compute t* on random normal iid normal data
 #' set.seed(23421)
@@ -83,16 +82,17 @@
 #'
 #' # Compute an approximation of tau* via resampling
 #' set.seed(9492)
-#' tStar(rnorm(10000), rnorm(10000), resample = TRUE, sampleSize = 30,
-#'       numResamples = 5000)
-#' }
+#' tStar(rnorm(10000), rnorm(10000),
+#'   resample = TRUE, sampleSize = 30,
+#'   numResamples = 5000
+#' )
 tStar <- function(x, y, vStatistic = FALSE, resample = FALSE,
                   numResamples = 500, sampleSize = min(length(x), 1000),
                   method = "fastest", slow = FALSE) {
   if (slow) {
-    method = "naive"
+    method <- "naive"
   } else if (method == "fastest") {
-    method = "heller"
+    method <- "heller"
   }
   if (!is.numeric(x) || !is.numeric(y)) {
     stop("Input x and y to tStar must be numeric.")
@@ -101,13 +101,13 @@ tStar <- function(x, y, vStatistic = FALSE, resample = FALSE,
     stop("Input x and y to tStar are of the wrong length, they must both have equal length < 4.")
   }
   if (!is.logical(vStatistic) || length(vStatistic) != 1) {
-    stop("Input parameter vStatistic into function tStar must be a logical T/F value.")
+    stop("Input parameter vStatistic into function tStar must be a logical TRUE/FALSE value.")
   }
   if (!is.logical(slow) || length(slow) != 1) {
-    stop("Input parameter slow into function tStar must be a logical T/F value.")
+    stop("Input parameter slow into function tStar must be a logical TRUE/FALSE value.")
   }
   if (!is.logical(resample) || length(resample) != 1) {
-    stop("Input parameter resample into function tStar must be a logical T/F value.")
+    stop("Input parameter resample into function tStar must be a logical TRUE/FALSE value.")
   }
   if (resample && numResamples <= 0) {
     stop("When resampling the number of resamples must be positive.")
@@ -130,9 +130,9 @@ tStar <- function(x, y, vStatistic = FALSE, resample = FALSE,
   } else if (method == "naive") {
     return(TStarNaiveRCPP(x, y, vStatistic))
   } else if (method == "weihs") {
-    ord = sort.list(x, method = "quick", na.last = NA)
-    x = x[ord]
-    y = y[ord]
+    ord <- sort.list(x, method = "quick", na.last = NA)
+    x <- x[ord]
+    y <- y[ord]
     if (vStatistic) {
       return(VTStarWeihsEtAlRCPP(x, y))
     } else {
@@ -164,10 +164,10 @@ tStar <- function(x, y, vStatistic = FALSE, resample = FALSE,
 #' @param error the error tolerated from the binary search
 #'
 #' @return the quantile (within error).
-binaryQuantileSearch = function(pDistFunc, p, lastLeft, lastRight,
-                                error = 10^-4) {
-  mid = (lastLeft + lastRight) / 2
-  pMid = pDistFunc(mid)
+binaryQuantileSearch <- function(pDistFunc, p, lastLeft, lastRight,
+                                 error = 10^-4) {
+  mid <- (lastLeft + lastRight) / 2
+  pMid <- pDistFunc(mid)
   if (lastRight - lastLeft < error) {
     return(mid)
   } else if (pMid > p) {
@@ -201,7 +201,7 @@ binaryQuantileSearch = function(pDistFunc, p, lastLeft, lastRight,
 #' @return dHoeffInd gives the density, pHoeffInd gives the distribution
 #'         function, qHoeffInd gives the quantile function, and rHoeffInd
 #'         generates random samples.
-pHoeffInd <- function(x, lower.tail = T, error = 10^-5) {
+pHoeffInd <- function(x, lower.tail = TRUE, error = 10^-5) {
   if (lower.tail) {
     return(HoeffIndCdfRCPP(x + 1, error))
   }
@@ -211,10 +211,10 @@ pHoeffInd <- function(x, lower.tail = T, error = 10^-5) {
 #' @rdname pHoeffInd
 #' @export
 rHoeffInd <- function(n) {
-  sims = numeric(n)
-  for(i in 1:50) {
-    for(j in 1:50) {
-      sims = sims + (36 / pi^4) * (1 / (i^2 * j^2)) * (rchisq(n, df = 1) - 1)
+  sims <- numeric(n)
+  for (i in 1:50) {
+    for (j in 1:50) {
+      sims <- sims + (36 / pi^4) * (1 / (i^2 * j^2)) * (rchisq(n, df = 1) - 1)
     }
   }
   return(sims)
@@ -222,9 +222,11 @@ rHoeffInd <- function(n) {
 
 #' @rdname pHoeffInd
 #' @export
-dHoeffInd <- function(x, error = 1/2 * 10^-3) {
+dHoeffInd <- function(x, error = 1 / 2 * 10^-3) {
   if (length(x) != 1) {
-    return(sapply(x, function(y) { HoeffIndPdfRCPP(y + 1, error) }))
+    return(sapply(x, function(y) {
+      HoeffIndPdfRCPP(y + 1, error)
+    }))
   }
   HoeffIndPdfRCPP(x + 1, error)
 }
@@ -239,13 +241,17 @@ qHoeffInd <- function(p, error = 10^-4) {
   } else if (p < 0 || p > 1) {
     stop("p must be between 0 and 1 in qHoeffInd.")
   }
-  right = 1
+  right <- 1
   while (pHoeffInd(right, error = error / 2) < p) {
-    right = right * 2
+    right <- right * 2
   }
-  pDistFunc = function(x) { pHoeffInd(x, error/2) }
-  return(binaryQuantileSearch(pDistFunc, p, -1,
-                              right, error / 2))
+  pDistFunc <- function(x) {
+    pHoeffInd(x, error / 2)
+  }
+  return(binaryQuantileSearch(
+    pDistFunc, p, -1,
+    right, error / 2
+  ))
 }
 
 #' Check if Vector of Probabilities
@@ -256,7 +262,7 @@ qHoeffInd <- function(p, error = 10^-4) {
 #'
 #' @return TRUE if conditions are met, FALSE if otherwise
 isProbVector <- function(probs) {
-  probSum = sum(probs)
+  probSum <- sum(probs)
   return(abs(probSum - 1) < 10^-7 && all(probs >= 0))
 }
 
@@ -285,7 +291,7 @@ isProb <- function(prob) {
 #' @param probs1 a vector of probabilities corresponding to the (ordered)
 #'        support of X. That is if your first random variable has support
 #'        \eqn{u_1,...,u_n} then the ith entry of probs should be
-#'        eqn{P(X = u_i)}.
+#'        \eqn{P(X = u_i)}.
 #' @param probs2 just as probs1 but for the second random variable Y.
 #'
 #' @name pDisHoeffInd
@@ -294,17 +300,19 @@ isProb <- function(prob) {
 #' @return dDisHoeffInd gives the density, pDisHoeffInd gives the distribution
 #'         function, qDisHoeffInd gives the quantile function, and
 #'         rDisHoeffInd generates random samples.
-pDisHoeffInd <- function(x, probs1, probs2, lower.tail = T, error = 10^-5) {
+pDisHoeffInd <- function(x, probs1, probs2, lower.tail = TRUE, error = 10^-5) {
   if (!isProbVector(probs1) || !isProbVector(probs2)) {
     stop("either probs1 or probs2 in pDisHoeffInd is not a probability vector.")
   }
   if (any(probs1 == 1) || any(probs2 == 1)) {
-    lowerTailProb = if (x >= 0) 1 else 0
+    lowerTailProb <- if (x >= 0) 1 else 0
   } else {
-    eigenP = eigenForDiscreteProbs(probs1)
-    eigenQ = eigenForDiscreteProbs(probs2)
-    lowerTailProb = HoeffIndDiscreteCdfRCPP(x + 4 * sum(eigenP) * sum(eigenQ),
-                                            eigenP, eigenQ, error)
+    eigenP <- eigenForDiscreteProbs(probs1)
+    eigenQ <- eigenForDiscreteProbs(probs2)
+    lowerTailProb <- HoeffIndDiscreteCdfRCPP(
+      x + 4 * sum(eigenP) * sum(eigenQ),
+      eigenP, eigenQ, error
+    )
   }
   if (lower.tail) {
     return(lowerTailProb)
@@ -318,16 +326,20 @@ dDisHoeffInd <- function(x, probs1, probs2, error = 10^-3) {
   if (!isProbVector(probs1) || !isProbVector(probs2)) {
     stop("either probs1 or probs2 in pDisHoeffInd is not a probability vector.")
   }
-  if (any(probs1 == 1) || any(probs2 ==1)) {
-    stop(paste("since length(probs1) == 1 or length(probs2) == 1 resulting",
-         "distribution is degenerate and thus has no density."))
+  if (any(probs1 == 1) || any(probs2 == 1)) {
+    stop(paste(
+      "since length(probs1) == 1 or length(probs2) == 1 resulting",
+      "distribution is degenerate and thus has no density."
+    ))
   }
-  eigenP = eigenForDiscreteProbs(probs1)
-  eigenQ = eigenForDiscreteProbs(probs2)
-  return(HoeffIndDiscretePdfRCPP(x + 4 * sum(eigenP) * sum(eigenQ),
-                                 eigenP,
-                                 eigenQ,
-                                 error))
+  eigenP <- eigenForDiscreteProbs(probs1)
+  eigenQ <- eigenForDiscreteProbs(probs2)
+  return(HoeffIndDiscretePdfRCPP(
+    x + 4 * sum(eigenP) * sum(eigenQ),
+    eigenP,
+    eigenQ,
+    error
+  ))
 }
 
 #' @rdname pDisHoeffInd
@@ -336,15 +348,15 @@ rDisHoeffInd <- function(n, probs1, probs2) {
   if (!isProbVector(probs1) || !isProbVector(probs2)) {
     stop("either probs1 or probs2 in rDisHoeffInd is not a probability vector.")
   }
-  if (any(probs1 == 1) || any(probs2 ==1)) {
+  if (any(probs1 == 1) || any(probs2 == 1)) {
     return(rep(0, n))
   }
-  eigenP = eigenForDiscreteProbs(probs1)
-  eigenQ = eigenForDiscreteProbs(probs2)
-  asymResults = numeric(n)
+  eigenP <- eigenForDiscreteProbs(probs1)
+  eigenQ <- eigenForDiscreteProbs(probs2)
+  asymResults <- numeric(n)
   for (i in 1:length(eigenP)) {
     for (j in 1:length(eigenQ)) {
-      asymResults = asymResults + 4 * eigenP[i] * eigenQ[j] * (rchisq(n, df = 1) - 1)
+      asymResults <- asymResults + 4 * eigenP[i] * eigenQ[j] * (rchisq(n, df = 1) - 1)
     }
   }
   return(asymResults)
@@ -359,23 +371,28 @@ qDisHoeffInd <- function(p, probs1, probs2, error = 10^-4) {
   if (!isProb(p)) {
     stop("probability p must be length 1 and in [0,1].")
   }
-  if (any(probs1 == 1) || any(probs2 ==1)) {
+  if (any(probs1 == 1) || any(probs2 == 1)) {
     return(0)
   }
 
-  left = -4 * sum(eigenForDiscreteProbs(probs1)) * sum(eigenForDiscreteProbs(probs2))
+  left <- -4 * sum(eigenForDiscreteProbs(probs1)) * sum(eigenForDiscreteProbs(probs2))
   if (p == 0) {
     return(left)
   } else if (p == 1) {
     return(Inf)
   }
-  right = 1
+  right <- 1
   while (pDisHoeffInd(right, probs1, probs2, error = error / 2) < p) {
-    right = right * 2
+    right <- right * 2
   }
-  return(binaryQuantileSearch(function(x) { pDisHoeffInd(x, probs1, probs2,
-                                                         error = error / 2) },
-                              p, left, right, error))
+  return(binaryQuantileSearch(
+    function(x) {
+      pDisHoeffInd(x, probs1, probs2,
+        error = error / 2
+      )
+    },
+    p, left, right, error
+  ))
 }
 
 #' Null asymptotic distribution of t* in the mixed case
@@ -402,15 +419,15 @@ qDisHoeffInd <- function(p, probs1, probs2, error = 10^-4) {
 #' @return dMixHoeffInd gives the density, pMixHoeffInd gives the distribution
 #'         function, qMixHoeffInd gives the quantile function, and
 #'         rMixHoeffInd generates random samples.
-pMixHoeffInd <- function(x, probs, lower.tail = T, error = 10^-6) {
+pMixHoeffInd <- function(x, probs, lower.tail = TRUE, error = 10^-6) {
   if (!isProbVector(probs)) {
     stop("probs in pMixHoeffInd is not a probability vector.")
   }
   if (any(probs == 1)) {
-    lowerTailProb = if (x >= 0) 1 else 0
+    lowerTailProb <- if (x >= 0) 1 else 0
   } else {
-    eigenP = eigenForDiscreteProbs(probs)
-    lowerTailProb = HoeffIndMixedCdfRCPP(x + 2 * sum(eigenP), eigenP, error)
+    eigenP <- eigenForDiscreteProbs(probs)
+    lowerTailProb <- HoeffIndMixedCdfRCPP(x + 2 * sum(eigenP), eigenP, error)
   }
   if (lower.tail) {
     return(lowerTailProb)
@@ -425,13 +442,17 @@ dMixHoeffInd <- function(x, probs, error = 10^-3) {
     stop("probs in dMixHoeffInd is not a probability vector.")
   }
   if (any(probs == 1)) {
-    stop(paste("probs represents a degenerate discrete random variable and",
-               "thus the density of the asymptotic distribution doesn't exist"))
+    stop(paste(
+      "probs represents a degenerate discrete random variable and",
+      "thus the density of the asymptotic distribution doesn't exist"
+    ))
   }
-  eigenP = eigenForDiscreteProbs(probs)
-  return(HoeffIndMixedPdfRCPP(x + 2 * sum(eigenP),
-                              eigenP,
-                              error))
+  eigenP <- eigenForDiscreteProbs(probs)
+  return(HoeffIndMixedPdfRCPP(
+    x + 2 * sum(eigenP),
+    eigenP,
+    error
+  ))
 }
 
 #' @rdname pMixHoeffInd
@@ -443,12 +464,12 @@ rMixHoeffInd <- function(n, probs, error = 10^-8) {
   if (any(probs == 1)) {
     return(rep(0, n))
   }
-  eigenP = eigenForDiscreteProbs(probs)
-  top = ceiling((sum((12 / pi^2 * eigenP)^2) / (3 * error))^(1/3) + 1)
-  sims = numeric(n)
+  eigenP <- eigenForDiscreteProbs(probs)
+  top <- ceiling((sum((12 / pi^2 * eigenP)^2) / (3 * error))^(1 / 3) + 1)
+  sims <- numeric(n)
   for (lambda in eigenP) {
     for (i in 1:top) {
-      sims = sims + (12 / pi^2) * lambda/i^2 * (rchisq(n, df = 1) - 1)
+      sims <- sims + (12 / pi^2) * lambda / i^2 * (rchisq(n, df = 1) - 1)
     }
   }
   return(sims)
@@ -466,19 +487,24 @@ qMixHoeffInd <- function(p, probs, error = 10^-4) {
   if (any(probs == 1)) {
     return(0)
   }
-  left = -2 * sum(eigenForDiscreteProbs(probs))
+  left <- -2 * sum(eigenForDiscreteProbs(probs))
   if (p == 0) {
     return(left)
   } else if (p == 1) {
     return(Inf)
   }
-  right = 1
+  right <- 1
   while (pMixHoeffInd(right, probs, error = error / 2) < p) {
-    right = right * 2
+    right <- right * 2
   }
-  return(binaryQuantileSearch(function(x) { pMixHoeffInd(x, probs,
-                                                         error = error / 2) },
-                              p, left, right, error))
+  return(binaryQuantileSearch(
+    function(x) {
+      pMixHoeffInd(x, probs,
+        error = error / 2
+      )
+    },
+    p, left, right, error
+  ))
 }
 
 #' Print Tau* Test Results
@@ -489,27 +515,29 @@ qMixHoeffInd <- function(p, probs, error = 10^-4) {
 #'
 #' @param x the tstest object to be printed
 #' @param ... ignored.
+#' @return No return value, prints to console.
 print.tstest <- function(x, ...) {
-  asymTest = F
+  asymTest <- FALSE
   if (x$mode %in% c("continuous", "discrete", "mixed")) {
     cat(paste("Test Type: asymptotic", x$mode, "\n"))
-    asymTest = T
+    asymTest <- TRUE
   } else {
-    cat(paste("Test Type: permutation (", x$resamples," simulations)\n",
-              sep = ""))
+    cat(paste("Test Type: permutation (", x$resamples, " simulations)\n",
+      sep = ""
+    ))
   }
   cat(paste("Input Length:", length(x$x), "\n\n"))
 
   cat(paste("Results:\n"))
-  df = data.frame(round(x$tStar, 5))
+  df <- data.frame(round(x$tStar, 5))
   if (asymTest) {
-    df = cbind(df, round(x$pVal, 5))
-    colnames(df) = c("t* value", "Asym. p-val")
+    df <- cbind(df, round(x$pVal, 5))
+    colnames(df) <- c("t* value", "Asym. p-val")
   } else {
-    df = cbind(df, round(x$pVal, 5))
-    colnames(df) = c("t* value", "Perm. p-val")
+    df <- cbind(df, round(x$pVal, 5))
+    colnames(df) <- c("t* value", "Perm. p-val")
   }
-  row.names(df) = ""
+  row.names(df) <- ""
   print(df)
 }
 
@@ -522,11 +550,11 @@ print.tstest <- function(x, ...) {
 #' @param x a vector which should be determined if discrete or not.
 #'
 #' @return the best judgement of whether or not the data was discrete
-isDiscrete = function(x) {
+isDiscrete <- function(x) {
   if (is.integer(x) || (length(unique(x)) != length(x))) {
-    return(T)
+    return(TRUE)
   }
-  return(F)
+  return(FALSE)
 }
 
 #' Is Vector Valid Data?
@@ -574,78 +602,80 @@ isValidDataVector <- function(x) {
 #'
 #' @examples
 #' set.seed(123)
-#' x = rnorm(100)
-#' y = rnorm(100)
-#' testResults = tauStarTest(x,y)
+#' x <- rnorm(100)
+#' y <- rnorm(100)
+#' testResults <- tauStarTest(x, y)
 #' print(testResults$pVal) # big p-value
 #'
-#' y = y + x # make x and y correlated
-#' testResults = tauStarTest(x,y)
+#' y <- y + x # make x and y correlated
+#' testResults <- tauStarTest(x, y)
 #' print(testResults$pVal) # small p-value
-tauStarTest <- function(x, y, mode="auto", resamples = 1000) {
+tauStarTest <- function(x, y, mode = "auto", resamples = 1000) {
   if (!isValidDataVector(x) || !isValidDataVector(y) ||
-      length(x) != length(y)) {
-    stop(paste("vectors inputted to tauStarTest must be of type numeric or",
-               "integer and must be the same length"))
+    length(x) != length(y)) {
+    stop(paste(
+      "vectors inputted to tauStarTest must be of type numeric or",
+      "integer and must be the same length"
+    ))
   }
   if (length(resamples) != 1 || resamples %% 1 != 0) {
     stop("resamples must be integer valued.")
   }
-  xIsDis = isDiscrete(x)
-  yIsDis = isDiscrete(y)
-  n = length(x)
+  xIsDis <- isDiscrete(x)
+  yIsDis <- isDiscrete(y)
+  n <- length(x)
 
-  toReturn = list()
-  class(toReturn) = "tstest"
-  toReturn$mode = mode
-  toReturn$x = x
-  toReturn$y = y
-  toReturn$tStar = tStar(x, y)
-  toReturn$resamples = resamples
+  toReturn <- list()
+  class(toReturn) <- "tstest"
+  toReturn$mode <- mode
+  toReturn$x <- x
+  toReturn$y <- y
+  toReturn$tStar <- tStar(x, y)
+  toReturn$resamples <- resamples
 
   if (mode == "auto") {
     if (xIsDis && yIsDis) {
-      mode = "discrete"
+      mode <- "discrete"
     } else if (xIsDis || yIsDis) {
-      mode = "mixed"
+      mode <- "mixed"
     } else {
-      mode = "continuous"
+      mode <- "continuous"
     }
-    toReturn$mode = mode
+    toReturn$mode <- mode
   }
 
   if (mode == "continuous") {
     if (xIsDis || yIsDis) {
       stop("Input vectors to tauStarTest are have repeated entries or are of the integer type but the mode is set to continuous.")
     }
-    toReturn$pVal = 1 - pHoeffInd(n * toReturn$tStar)
-
+    toReturn$pVal <- 1 - pHoeffInd(n * toReturn$tStar)
   } else if (mode == "discrete") {
-    p = as.numeric(table(x)) / n
-    q = as.numeric(table(y)) / n
-    toReturn$pVal = 1 - pDisHoeffInd(n * toReturn$tStar, probs1 = p, probs2 = q)
-
+    p <- as.numeric(table(x)) / n
+    q <- as.numeric(table(y)) / n
+    toReturn$pVal <- 1 - pDisHoeffInd(n * toReturn$tStar, probs1 = p, probs2 = q)
   } else if (mode == "mixed") {
     if (xIsDis && yIsDis) {
       stop("Input vectors to tauStarTest both are discrete but 'mixed' mode was chosen instead of 'discrete'.\n")
     } else if (!xIsDis && !yIsDis) {
-      warning(paste("Neither vector input to tauStarTest has duplicate entries",
-                    "but 'mixed' mode was selected. Will default to assuming x",
-                    "is discrete and y continuous. \n"))
+      warning(paste(
+        "Neither vector input to tauStarTest has duplicate entries",
+        "but 'mixed' mode was selected. Will default to assuming x",
+        "is discrete and y continuous. \n"
+      ))
     }
     if (xIsDis) {
-      z = x
-      x = y
-      y = z
+      z <- x
+      x <- y
+      y <- z
     }
-    p = as.numeric(table(y)) / n
-    toReturn$pVal = 1 - pMixHoeffInd(n * toReturn$tStar, probs = p)
+    p <- as.numeric(table(y)) / n
+    toReturn$pVal <- 1 - pMixHoeffInd(n * toReturn$tStar, probs = p)
   } else if (mode == "permutation") {
-    sampleTStars = numeric(resamples)
+    sampleTStars <- numeric(resamples)
     for (i in 1:resamples) {
-      sampleTStars[i] = tStar(sample(x), y)
+      sampleTStars[i] <- tStar(sample(x), y)
     }
-    toReturn$pVal = mean(sampleTStars >= toReturn$tStar)
+    toReturn$pVal <- mean(sampleTStars >= toReturn$tStar)
   } else {
     stop("Invalid mode as input to tauStarTest.")
   }

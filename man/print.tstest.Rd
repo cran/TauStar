@@ -11,6 +11,9 @@
 
 \item{...}{ignored.}
 }
+\value{
+No return value, prints to console.
+}
 \description{
 A simple print function for tstest (Tau* test) objects.
 }

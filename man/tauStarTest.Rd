@@ -38,13 +38,13 @@ distributions were computed in Nandy, Weihs, and Drton (2016)
 }
 \examples{
 set.seed(123)
-x = rnorm(100)
-y = rnorm(100)
-testResults = tauStarTest(x,y)
+x <- rnorm(100)
+y <- rnorm(100)
+testResults <- tauStarTest(x, y)
 print(testResults$pVal) # big p-value
 
-y = y + x # make x and y correlated
-testResults = tauStarTest(x,y)
+y <- y + x # make x and y correlated
+testResults <- tauStarTest(x, y)
 print(testResults$pVal) # small p-value
 }
 \references{

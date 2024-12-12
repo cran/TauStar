@@ -4,9 +4,16 @@
 \alias{tStar}
 \title{Computing t*}
 \usage{
-tStar(x, y, vStatistic = FALSE, resample = FALSE, numResamples = 500,
-  sampleSize = min(length(x), 1000), method = "fastest",
-  slow = FALSE)
+tStar(
+  x,
+  y,
+  vStatistic = FALSE,
+  resample = FALSE,
+  numResamples = 500,
+  sampleSize = min(length(x), 1000),
+  method = "fastest",
+  slow = FALSE
+)
 }
 \arguments{
 \item{x}{A numeric vector of x values (length >= 4).}
@@ -54,14 +61,13 @@ building off of the work of Weihs, Drton, and Leung (2015)
 <DOI:10.1007/s00180-015-0639-x>.
 }
 \examples{
-\dontrun{
 library(TauStar)
 
 # Compute t* for a concordant quadruple
-tStar(c(1,2,3,4), c(1,2,3,4)) # == 2/3
+tStar(c(1, 2, 3, 4), c(1, 2, 3, 4)) # == 2/3
 
 # Compute t* for a discordant quadruple
-tStar(c(1,2,3,4), c(1,-1,1,-1)) # == -1/3
+tStar(c(1, 2, 3, 4), c(1, -1, 1, -1)) # == -1/3
 
 # Compute t* on random normal iid normal data
 set.seed(23421)
@@ -73,9 +79,10 @@ tStar(rnorm(100), rnorm(100), vStatistic = TRUE)
 
 # Compute an approximation of tau* via resampling
 set.seed(9492)
-tStar(rnorm(10000), rnorm(10000), resample = TRUE, sampleSize = 30,
-      numResamples = 5000)
-}
+tStar(rnorm(10000), rnorm(10000),
+  resample = TRUE, sampleSize = 30,
+  numResamples = 5000
+)
 }
 \references{
 Bergsma, Wicher; Dassios, Angelos. A consistent test of independence based
